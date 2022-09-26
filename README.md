@@ -22,9 +22,15 @@ Spark Sql
     val take3_ = udf((input: Seq[Long]) => input.take(3))
     dummy.withColumn("only_first_three",take3_(col("all"))).show(false)
     ```
+    
 5. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/structs-for-column-names-and-values.html  
     ```
     val aa = ratings.select(col("name"),explode(col("movieRatings")).as("expl"))
     val bb = aa.select(col("name"),col("expl.*")).show
     bb.groupBy("name").pivot("movieName").sum("rating").show
     ```
+
+6. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/merge-two-rows.html  
+     ```
+     input.groupBy(col("id"),col("name")).agg(sum("age").as("age"),max("city").as("city")).show
+     ```
