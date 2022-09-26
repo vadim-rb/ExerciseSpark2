@@ -40,8 +40,9 @@ Spark Sql
     ```
     spark.read.json(spark.sparkContext.wholeTextFiles("/user/test/input.json").values).show
     ```
+8. --    
     
-8. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Using-CSV-Data-Source.html  
+9. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Using-CSV-Data-Source.html  
         cat deniro.csv  
         "Year", "Score", "Title"  
         1968,  86, "Greetings"  
