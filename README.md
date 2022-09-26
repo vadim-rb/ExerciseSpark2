@@ -9,6 +9,7 @@ Spark Sql
     dept.createOrReplaceTempView("dept")
     spark.sql("select VALUES,Delimiter,SPLIT(if (substr(VALUES,-1)=Delimiter,substr(VALUES, 1, length(VALUES) - 1),VALUES),Delimiter) as split_values from dept").show(false)
     ```
+2. x  
   
 3. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/adding-count-to-the-source-dataframe.html 
     ```
