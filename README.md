@@ -34,3 +34,8 @@ Spark Sql
      ```
      input.groupBy(col("id"),col("name")).agg(sum("age").as("age"),max("city").as("city")).show
      ```
+
+7. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/explode-structs-array.html  
+    ```
+    spark.read.json(spark.sparkContext.wholeTextFiles("/user/test/input.json").values).show
+    ```
