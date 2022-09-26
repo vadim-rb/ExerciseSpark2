@@ -59,3 +59,9 @@ Spark Sql
         
         spark.read.options(Map("inferSchema"->"true", "header"->"true")).csv("/user/test/deniro.csv").show(false)
         
+10. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/Finding-Ids-of-Rows-with-Word-in-Array-Column.html  
+    ```
+    val aa=input.withColumn("arr",split(col("words"),",")).select(col("id"),col("word"),explode(col("arr")).as("newarr"))
+    val bb = aa.groupBy("newarr").agg(collect_set("id"))
+    input.as("i").join(bb.as("b"),col("i.word")===col("b.newarr")).select(col("i.word"),col("b.collect_set(id)")).show
+    ```
