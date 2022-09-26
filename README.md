@@ -9,7 +9,7 @@ Spark Sql
     dept.createOrReplaceTempView("dept")
     spark.sql("select VALUES,Delimiter,SPLIT(if (substr(VALUES,-1)=Delimiter,substr(VALUES, 1, length(VALUES) - 1),VALUES),Delimiter) as split_values from dept").show(false)
     ```
-2. x  
+2. --  
   
 3. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/adding-count-to-the-source-dataframe.html 
     ```
@@ -40,3 +40,21 @@ Spark Sql
     ```
     spark.read.json(spark.sparkContext.wholeTextFiles("/user/test/input.json").values).show
     ```
+    
+8. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Using-CSV-Data-Source.html  
+        cat deniro.csv  
+        "Year", "Score", "Title"  
+        1968,  86, "Greetings"  
+        1970,  17, "Bloody Mama"  
+        1970,  73, "Hi, Mom!"  
+        1971,  40, "Born to Win"  
+        1973,  98, "Mean Streets"  
+        1973,  88, "Bang the Drum Slowly"  
+        1974,  97, "The Godfather, Part II"  
+        1976,  41, "The Last Tycoon"  
+        1976,  99, "Taxi Driver"  
+        1977,  47, "1900"  
+        1977,  67, "New York, New York"  
+        
+        spark.read.options(Map("inferSchema"->"true", "header"->"true")).csv("/user/test/deniro.csv").show(false)
+        
