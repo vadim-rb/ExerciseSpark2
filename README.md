@@ -65,3 +65,8 @@ Spark Sql
     val bb = aa.groupBy("newarr").agg(collect_set("id"))
     input.as("i").join(bb.as("b"),col("i.word")===col("b.newarr")).select(col("i.word"),col("b.collect_set(id)")).show
     ```
+
+11. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Using-Dataset-flatMap-Operator.html  
+    ```
+    nums.flatMap(  r=>r.getSeq[Int](0).map((r.getSeq[Int](0),_) )  ).toDF("nums","num").show
+    ```
