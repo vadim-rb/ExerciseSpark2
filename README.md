@@ -70,3 +70,12 @@ Spark Sql
     ```
     nums.flatMap(  r=>r.getSeq[Int](0).map((r.getSeq[Int](0),_) )  ).toDF("nums","num").show
     ```
+    
+12. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Reverse-engineering-Dataset-show-Output.html  
+    ```
+    val rddFromFile = spark.sparkContext.textFile("/user/test/input12.txt")
+    val aa = rddFromFile.filter(f=> !(f.startsWith("+"))).map(r=>r.split('|'))
+    val rowRDD = aa.map(attributes => org.apache.spark.sql.Row(attributes(1), attributes(2), attributes(3)))
+    val ss = new StructType().add("id",StringType).add("Text1",StringType).add("Text2",StringType)
+    val fi  = spark.createDataFrame(rowRDD,ss)
+    ```
