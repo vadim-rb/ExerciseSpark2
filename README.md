@@ -79,3 +79,9 @@ Spark Sql
     val ss = new StructType().add("id",StringType).add("Text1",StringType).add("Text2",StringType)
     val fi  = spark.createDataFrame(rowRDD,ss)
     ```
+
+13. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Flattening-Array-Columns-From-Datasets-of-Arrays-to-Datasets-of-Array-Elements.html  
+    ```
+    val l = input.collect()(0).getSeq[String](0).length
+    input.select((0 until l).map(i => input("value")(i).alias(s"$i")): _*).show
+    ```
