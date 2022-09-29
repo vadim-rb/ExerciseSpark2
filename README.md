@@ -85,3 +85,13 @@ Spark Sql
     val l = input.collect()(0).getSeq[String](0).length
     input.select((0 until l).map(i => input("value")(i).alias(s"$i")): _*).show
     ```
+14. --  
+
+15. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/Finding-Most-Populated-Cities-Per-Country.html  
+```
+val df = spark.read.format("csv").option("header", "true").schema(schema).load("/user/test/input15.csv")
+val df2 = df.withColumn("population",regexp_replace(col("population"), " ", "").cast(IntegerType))
+val df3 = df2.groupBy("country").agg(max("population").as("maxp"))
+df3.as("tab1").join(df2.as("tab2"),col("tab2.country")===col("tab1.country")&&col("tab2.population")===col("tab1.maxp")).select(col("tab2.name"),col("tab2.country"),col("tab1.maxp")).show
+
+```
