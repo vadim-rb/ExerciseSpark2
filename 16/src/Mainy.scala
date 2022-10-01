@@ -6,7 +6,7 @@ import scala.language.implicitConversions
 
 //java -cp "scala-library-2.11.8.jar;scopt_2.11-3.5.0.jar;testscopty2_2.11-0.1.0-SNAPSHOT.jar" Mainy --path 'pp' --col a,
 /*
-/usr/hdp/2.6.1.0-129/spark2/bin/spark-submit --master yarn-cluster --class "Mainy" testscopty2-assembly-0.1.0-SNAPSHOT.jar --path "/user/ext-vadim.popov/input16.csv" --col city,country
+/usr/hdp/2.6.1.0-129/spark2/bin/spark-submit --master yarn-cluster --class "Mainy" testscopty2-assembly-0.1.0-SNAPSHOT.jar --path "/user/test/input16.csv" --col city,country
  */
 
 object Mainy {
