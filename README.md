@@ -95,3 +95,7 @@ val df3 = df2.groupBy("country").agg(max("population").as("maxp"))
 df3.as("tab1").join(df2.as("tab2"),col("tab2.country")===col("tab1.country")&&col("tab2.population")===col("tab1.maxp")).select(col("tab2.name"),col("tab2.country"),col("tab1.maxp")).show
 
 ```
+16. [source code](/16/src) 
+```
+/usr/hdp/2.6.1.0-129/spark2/bin/spark-submit --master yarn-cluster --class "Mainy" testscopty2-assembly-0.1.0-SNAPSHOT.jar --path "/user/test/input16.csv" --col city,country
+```
