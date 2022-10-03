@@ -109,3 +109,12 @@ dates.createOrReplaceTempView("tmptbl")
 val newdf = spark.sql("select date_string,TO_DATE(CAST(UNIX_TIMESTAMP(date_string, 'MM/dd/yyyy') AS TIMESTAMP))to_date from tmptbl")
 newdf.withColumn("datediff",datediff(current_date(),col("to_date"))).show
 ```
+19. --
+
+20. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Why-are-all-fields-null-when-querying-with-schema.html  
+```
+import org.apache.spark.sql.types.{DateType, StringType, StructType}
+val schema = new StructType().add("dateTime",DateType).add("IP",StringType)
+val df = spark.read.option("delimiter", "|").option("dateFormat", "yyyy-MM-dd HH:mm:ss,SSS").schema(schema).csv("/user/test/input20.csv")
+df.show
+```
