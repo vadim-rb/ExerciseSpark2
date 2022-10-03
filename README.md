@@ -135,3 +135,11 @@ val schema = new StructType().add("number_of_days",IntegerType).add("date",DateT
 val df = spark.read.option("delimiter", ",").option("header", "true").option("dateFormat", "yyyy-MM-dd").schema(schema).csv("/user/test/input21.csv")
 df.withColumn("future", expr("date_add(date, number_of_days)")).show
 ```
+
+22. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Using-UDFs.html  
+```
+def mupper(s:String) : String = { s.toUpperCase }
+val mu: (String => String) = mupper
+spark.udf.register("my_upperUDF", mu)
+spark.sql("select my_upperUDF(\"hello\")").show(false)
+```
