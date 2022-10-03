@@ -99,3 +99,13 @@ df3.as("tab1").join(df2.as("tab2"),col("tab2.country")===col("tab1.country")&&co
 ```
 /usr/hdp/2.6.1.0-129/spark2/bin/spark-submit --master yarn-cluster --class "Mainy" testscopty2-assembly-0.1.0-SNAPSHOT.jar --path "/user/test/input16.csv" --col city,country
 ```
+
+17. --  
+
+18. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Difference-in-Days-Between-Dates-As-Strings.html  
+My spark 2.1 version, but to_date function with two parameters has been added in 2.2.0
+```
+dates.createOrReplaceTempView("tmptbl")
+val newdf = spark.sql("select date_string,TO_DATE(CAST(UNIX_TIMESTAMP(date_string, 'MM/dd/yyyy') AS TIMESTAMP))to_date from tmptbl")
+newdf.withColumn("datediff",datediff(current_date(),col("to_date"))).show
+```
