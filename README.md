@@ -118,3 +118,20 @@ val schema = new StructType().add("dateTime",DateType).add("IP",StringType)
 val df = spark.read.option("delimiter", "|").option("dateFormat", "yyyy-MM-dd HH:mm:ss,SSS").schema(schema).csv("/user/test/input20.csv")
 df.show
 ```
+
+21. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/How-to-add-days-as-values-of-a-column-to-date.html  
+```
+cat input21.csv
+number_of_days,date
+0,2016-01-1
+1,2016-02-2
+2,2016-03-22
+3,2016-04-25
+4,2016-05-21
+5,2016-06-1
+6,2016-03-21
+
+val schema = new StructType().add("number_of_days",IntegerType).add("date",DateType)
+val df = spark.read.option("delimiter", ",").option("header", "true").option("dateFormat", "yyyy-MM-dd").schema(schema).csv("/user/test/input21.csv")
+df.withColumn("future", expr("date_add(date, number_of_days)")).show
+```
