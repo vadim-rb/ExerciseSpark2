@@ -166,3 +166,9 @@ nums.groupBy(col("group")).agg(collect_list(col("id")).as("ids")).show
 ```
 nums.groupBy(col("group")).agg(max(col("id")).as("max_id"), min(col("id")).as("min_id") ).show
 ```
+
+27. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Using-pivot-to-generate-a-single-row-matrix.html  
+```
+val df2 = df.groupBy().pivot("udate").agg(first("cc"))
+df2.select(lit("cc").as("update"),$"*").show()
+```
