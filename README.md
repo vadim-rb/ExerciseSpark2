@@ -143,3 +143,11 @@ val mu: (String => String) = mupper
 spark.udf.register("my_upperUDF", mu)
 spark.sql("select my_upperUDF(\"hello\")").show(false)
 ```
+
+23. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Finding-maximum-value-agg.html  
+```
+val schema = new StructType().add("id",IntegerType).add("name",StringType).add("population",StringType)
+val df = spark.read.option("delimiter", ",").option("header", "true").schema(schema).csv("/user/test/input23.csv")
+val df2 = df.withColumn("population",regexp_replace(col("population"), " ", "").cast(IntegerType))
+df2.select(max(col("population"))).show
+```
