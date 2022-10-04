@@ -88,126 +88,132 @@ Spark Sql
 14. --  
 
 15. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/Finding-Most-Populated-Cities-Per-Country.html  
-```
-val df = spark.read.format("csv").option("header", "true").schema(schema).load("/user/test/input15.csv")
-val df2 = df.withColumn("population",regexp_replace(col("population"), " ", "").cast(IntegerType))
-val df3 = df2.groupBy("country").agg(max("population").as("maxp"))
-df3.as("tab1").join(df2.as("tab2"),col("tab2.country")===col("tab1.country")&&col("tab2.population")===col("tab1.maxp")).select(col("tab2.name"),col("tab2.country"),col("tab1.maxp")).show
+    ```
+    val df = spark.read.format("csv").option("header", "true").schema(schema).load("/user/test/input15.csv")
+    val df2 = df.withColumn("population",regexp_replace(col("population"), " ", "").cast(IntegerType))
+    val df3 = df2.groupBy("country").agg(max("population").as("maxp"))
+    df3.as("tab1").join(df2.as("tab2"),col("tab2.country")===col("tab1.country")&&col("tab2.population")===col("tab1.maxp")).select(col("tab2.name"),col("tab2.country"),col("tab1.maxp")).show
+    ```
 
-```
 16. [source code](/16/src) 
-```
-/usr/hdp/2.6.1.0-129/spark2/bin/spark-submit --master yarn-cluster --class "Mainy" testscopty2-assembly-0.1.0-SNAPSHOT.jar --path "/user/test/input16.csv" --col city,country
-```
+    ```
+    /usr/hdp/2.6.1.0-129/spark2/bin/spark-submit --master yarn-cluster --class "Mainy" testscopty2-assembly-0.1.0-SNAPSHOT.jar --path "/user/test/input16.csv" --col city,country
+    ```
 
 17. --  
 
 18. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Difference-in-Days-Between-Dates-As-Strings.html  
 My spark 2.1 version, but to_date function with two parameters has been added in 2.2.0
-```
-dates.createOrReplaceTempView("tmptbl")
-val newdf = spark.sql("select date_string,TO_DATE(CAST(UNIX_TIMESTAMP(date_string, 'MM/dd/yyyy') AS TIMESTAMP))to_date from tmptbl")
-newdf.withColumn("datediff",datediff(current_date(),col("to_date"))).show
-```
+    ```
+    dates.createOrReplaceTempView("tmptbl")
+    val newdf = spark.sql("select date_string,TO_DATE(CAST(UNIX_TIMESTAMP(date_string, 'MM/dd/yyyy') AS TIMESTAMP))to_date from tmptbl")
+    newdf.withColumn("datediff",datediff(current_date(),col("to_date"))).show
+    ```
 19. --
 
 20. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Why-are-all-fields-null-when-querying-with-schema.html  
-```
-import org.apache.spark.sql.types.{DateType, StringType, StructType}
-val schema = new StructType().add("dateTime",DateType).add("IP",StringType)
-val df = spark.read.option("delimiter", "|").option("dateFormat", "yyyy-MM-dd HH:mm:ss,SSS").schema(schema).csv("/user/test/input20.csv")
-df.show
-```
+    ```
+    import org.apache.spark.sql.types.{DateType, StringType, StructType}
+    val schema = new StructType().add("dateTime",DateType).add("IP",StringType)
+    val df = spark.read.option("delimiter", "|").option("dateFormat", "yyyy-MM-dd HH:mm:ss,SSS").schema(schema).csv("/user/test/input20.csv")
+    df.show
+    ```
 
 21. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/How-to-add-days-as-values-of-a-column-to-date.html  
-```
-cat input21.csv
-number_of_days,date
-0,2016-01-1
-1,2016-02-2
-2,2016-03-22
-3,2016-04-25
-4,2016-05-21
-5,2016-06-1
-6,2016-03-21
+    ```
+    cat input21.csv
+    number_of_days,date
+    0,2016-01-1
+    1,2016-02-2
+    2,2016-03-22
+    3,2016-04-25
+    4,2016-05-21
+    5,2016-06-1
+    6,2016-03-21
 
-val schema = new StructType().add("number_of_days",IntegerType).add("date",DateType)
-val df = spark.read.option("delimiter", ",").option("header", "true").option("dateFormat", "yyyy-MM-dd").schema(schema).csv("/user/test/input21.csv")
-df.withColumn("future", expr("date_add(date, number_of_days)")).show
-```
+    val schema = new StructType().add("number_of_days",IntegerType).add("date",DateType)
+    val df = spark.read.option("delimiter", ",").option("header", "true").option("dateFormat", "yyyy-MM-dd").schema(schema).csv("/user/test/input21.csv")
+    df.withColumn("future", expr("date_add(date, number_of_days)")).show
+    ```
 
 22. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Using-UDFs.html  
-```
-def mupper(s:String) : String = { s.toUpperCase }
-val mu: (String => String) = mupper
-spark.udf.register("my_upperUDF", mu)
-spark.sql("select my_upperUDF(\"hello\")").show(false)
-```
+    ```
+    def mupper(s:String) : String = { s.toUpperCase }
+    val mu: (String => String) = mupper
+    spark.udf.register("my_upperUDF", mu)
+    spark.sql("select my_upperUDF(\"hello\")").show(false)
+    ```
 
 23. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Finding-maximum-value-agg.html  
-```
-val schema = new StructType().add("id",IntegerType).add("name",StringType).add("population",StringType)
-val df = spark.read.option("delimiter", ",").option("header", "true").schema(schema).csv("/user/test/input23.csv")
-val df2 = df.withColumn("population",regexp_replace(col("population"), " ", "").cast(IntegerType))
-df2.select(max(col("population"))).show
-```
+    ```
+    val schema = new StructType().add("id",IntegerType).add("name",StringType).add("population",StringType)
+    val df = spark.read.option("delimiter", ",").option("header", "true").schema(schema).csv("/user/test/input23.csv")
+    val df2 = df.withColumn("population",regexp_replace(col("population"), " ", "").cast(IntegerType))
+    df2.select(max(col("population"))).show
+    ```
 
 24. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Finding-maximum-values-per-group-groupBy.html  
-```
-nums.groupBy(col("group")).agg(max(col("id")).as("max_id")).show
-```
+    ```
+    nums.groupBy(col("group")).agg(max(col("id")).as("max_id")).show
+    ```
 
 25. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Collect-values-per-group.html  
-```
-nums.groupBy(col("group")).agg(collect_list(col("id")).as("ids")).show
-```
+    ```
+    nums.groupBy(col("group")).agg(collect_list(col("id")).as("ids")).show
+    ```
 
 26. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/Multiple-Aggregations.html  
-```
-nums.groupBy(col("group")).agg(max(col("id")).as("max_id"), min(col("id")).as("min_id") ).show
-```
+    ```
+    nums.groupBy(col("group")).agg(max(col("id")).as("max_id"), min(col("id")).as("min_id") ).show
+    ```
 
 27. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Using-pivot-to-generate-a-single-row-matrix.html  
-```
-val df2 = df.groupBy().pivot("udate").agg(first("cc"))
-df2.select(lit("cc").as("update"),$"*").show()
-```
+    ```
+    val df2 = df.groupBy().pivot("udate").agg(first("cc"))
+    df2.select(lit("cc").as("update"),$"*").show()
+    ```
 
 28. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/Using-pivot-for-Cost-Average-and-Collecting-Values.html  
-```
-data.groupBy("id","type").pivot("date").avg("cost").show
-data.groupBy("id","type").pivot("date").agg(collect_list("ship")).orderBy("id").show
-```
+    ```
+    data.groupBy("id","type").pivot("date").avg("cost").show
+    data.groupBy("id","type").pivot("date").agg(collect_list("ship")).orderBy("id").show
+    ```
 
 29. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Pivoting-on-Multiple-Columns.html  
-```
-data.groupBy("id").pivot("day").agg(first("price").as("price"),first("units").as("unit")).show
-```
+    ```
+    data.groupBy("id").pivot("day").agg(first("price").as("price"),first("units").as("unit")).show
+    ```
 
 30. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Generating-Exam-Assessment-Report.html  
-```
-val df = spark.read.option("delimiter", ",").option("header", "true").csv("/user/test/input30.csv")
-val add_qid = udf((input:String) => "Qid_"+input)
-val df2 = df.withColumn("Qid",add_qid(col("Qid")))
-df2.groupBy("ParticipantID","Assessment","GeoTag").pivot("Qid").agg(first("AnswerText")).show
-```
+    ```
+    val df = spark.read.option("delimiter", ",").option("header", "true").csv("/user/test/input30.csv")
+    val add_qid = udf((input:String) => "Qid_"+input)
+    val df2 = df.withColumn("Qid",add_qid(col("Qid")))
+    df2.groupBy("ParticipantID","Assessment","GeoTag").pivot("Qid").agg(first("AnswerText")).show
+    ```
 
 31. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Flattening-Dataset-from-Long-to-Wide-Format.html  
-```
-val df = spark.read.option("delimiter", ",").option("header", "true").csv("/user/test/input31.csv")
-df.groupBy("key").pivot("date").agg(first("val1").as("v1"),first("val2").as("v2")).orderBy("key")show
-```
+    ```
+    val df = spark.read.option("delimiter", ",").option("header", "true").csv("/user/test/input31.csv")
+    df.groupBy("key").pivot("date").agg(first("val1").as("v1"),first("val2").as("v2")).orderBy("key")show
+    ```
 
 32. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/Finding-1st-and-2nd-Bestsellers-Per-Genre.html  
-```
-val books = spark.read.option("header", true).option("inferSchema", true).csv("/user/test/input32.csv")
-import org.apache.spark.sql.expressions.Window
-val windowSpec  = Window.partitionBy("genre").orderBy(col("quantity").desc)
-books.withColumn("rank",rank().over(windowSpec)).where(col("rank")<3).show()
-```
+    ```
+    val books = spark.read.option("header", true).option("inferSchema", true).csv("/user/test/input32.csv")
+    import org.apache.spark.sql.expressions.Window
+    val windowSpec  = Window.partitionBy("genre").orderBy(col("quantity").desc)
+    books.withColumn("rank",rank().over(windowSpec)).where(col("rank")<3).show()
+    ```
 33. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/Calculating-Gap-Between-Current-And-Highest-Salaries-Per-Department.html  
-```
-val df  = spark.read.option("header", true).option("inferSchema", true).csv("/user/test/input33.csv")
-val windowSpecAgg  = Window.partitionBy("department")
-df.withColumn("max", max(col("salary")).over(windowSpecAgg)).withColumn("diff",col("max")-col("salary")).drop("max").show
-```
+    ```
+    val df  = spark.read.option("header", true).option("inferSchema", true).csv("/user/test/input33.csv")
+    val windowSpecAgg  = Window.partitionBy("department")
+    df.withColumn("max", max(col("salary")).over(windowSpecAgg)).withColumn("diff",col("max")-col("salary")).drop("max").show
+    ```
+
+34. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Calculating-Running-Total-Cumulative-Sum.html  
+    ```
+    val windowSpec  = Window.partitionBy("department").orderBy(col("time"))
+    df.withColumn("sum", sum(col("items_sold")).over(windowSpec)).show
+    ```
