@@ -161,3 +161,8 @@ nums.groupBy(col("group")).agg(max(col("id")).as("max_id")).show
 ```
 nums.groupBy(col("group")).agg(collect_list(col("id")).as("ids")).show
 ```
+
+26. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/Multiple-Aggregations.html  
+```
+nums.groupBy(col("group")).agg(max(col("id")).as("max_id"), min(col("id")).as("min_id") ).show
+```
