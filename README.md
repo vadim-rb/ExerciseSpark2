@@ -156,3 +156,8 @@ df2.select(max(col("population"))).show
 ```
 nums.groupBy(col("group")).agg(max(col("id")).as("max_id")).show
 ```
+
+25. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Collect-values-per-group.html  
+```
+nums.groupBy(col("group")).agg(collect_list(col("id")).as("ids")).show
+```
