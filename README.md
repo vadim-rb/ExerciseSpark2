@@ -151,3 +151,8 @@ val df = spark.read.option("delimiter", ",").option("header", "true").schema(sch
 val df2 = df.withColumn("population",regexp_replace(col("population"), " ", "").cast(IntegerType))
 df2.select(max(col("population"))).show
 ```
+
+24. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Finding-maximum-values-per-group-groupBy.html  
+```
+nums.groupBy(col("group")).agg(max(col("id")).as("max_id")).show
+```
