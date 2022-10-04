@@ -172,3 +172,9 @@ nums.groupBy(col("group")).agg(max(col("id")).as("max_id"), min(col("id")).as("m
 val df2 = df.groupBy().pivot("udate").agg(first("cc"))
 df2.select(lit("cc").as("update"),$"*").show()
 ```
+
+28. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/Using-pivot-for-Cost-Average-and-Collecting-Values.html  
+```
+data.groupBy("id","type").pivot("date").avg("cost").show
+data.groupBy("id","type").pivot("date").agg(collect_list("ship")).orderBy("id").show
+```
