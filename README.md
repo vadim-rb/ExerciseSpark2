@@ -191,3 +191,9 @@ val add_qid = udf((input:String) => "Qid_"+input)
 val df2 = df.withColumn("Qid",add_qid(col("Qid")))
 df2.groupBy("ParticipantID","Assessment","GeoTag").pivot("Qid").agg(first("AnswerText")).show
 ```
+
+31. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Flattening-Dataset-from-Long-to-Wide-Format.html  
+```
+val df = spark.read.option("delimiter", ",").option("header", "true").csv("/user/test/input31.csv")
+df.groupBy("key").pivot("date").agg(first("val1").as("v1"),first("val2").as("v2")).orderBy("key")show
+```
