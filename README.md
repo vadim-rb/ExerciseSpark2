@@ -205,3 +205,9 @@ import org.apache.spark.sql.expressions.Window
 val windowSpec  = Window.partitionBy("genre").orderBy(col("quantity").desc)
 books.withColumn("rank",rank().over(windowSpec)).where(col("rank")<3).show()
 ```
+33. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/Calculating-Gap-Between-Current-And-Highest-Salaries-Per-Department.html  
+```
+val df  = spark.read.option("header", true).option("inferSchema", true).csv("/user/test/input33.csv")
+val windowSpecAgg  = Window.partitionBy("department")
+df.withColumn("max", max(col("salary")).over(windowSpecAgg)).withColumn("diff",col("max")-col("salary")).drop("max").show
+```
