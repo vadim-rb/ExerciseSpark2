@@ -178,3 +178,8 @@ df2.select(lit("cc").as("update"),$"*").show()
 data.groupBy("id","type").pivot("date").avg("cost").show
 data.groupBy("id","type").pivot("date").agg(collect_list("ship")).orderBy("id").show
 ```
+
+29. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Pivoting-on-Multiple-Columns.html  
+```
+data.groupBy("id").pivot("day").agg(first("price").as("price"),first("units").as("unit")).show
+```
