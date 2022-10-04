@@ -183,3 +183,11 @@ data.groupBy("id","type").pivot("date").agg(collect_list("ship")).orderBy("id").
 ```
 data.groupBy("id").pivot("day").agg(first("price").as("price"),first("units").as("unit")).show
 ```
+
+30. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Generating-Exam-Assessment-Report.html  
+```
+val df = spark.read.option("delimiter", ",").option("header", "true").csv("/user/test/input30.csv")
+val add_qid = udf((input:String) => "Qid_"+input)
+val df2 = df.withColumn("Qid",add_qid(col("Qid")))
+df2.groupBy("ParticipantID","Assessment","GeoTag").pivot("Qid").agg(first("AnswerText")).show
+```
