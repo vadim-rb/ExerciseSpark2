@@ -197,3 +197,11 @@ df2.groupBy("ParticipantID","Assessment","GeoTag").pivot("Qid").agg(first("Answe
 val df = spark.read.option("delimiter", ",").option("header", "true").csv("/user/test/input31.csv")
 df.groupBy("key").pivot("date").agg(first("val1").as("v1"),first("val2").as("v2")).orderBy("key")show
 ```
+
+32. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/Finding-1st-and-2nd-Bestsellers-Per-Genre.html  
+```
+val books = spark.read.option("header", true).option("inferSchema", true).csv("/user/test/input32.csv")
+import org.apache.spark.sql.expressions.Window
+val windowSpec  = Window.partitionBy("genre").orderBy(col("quantity").desc)
+books.withColumn("rank",rank().over(windowSpec)).where(col("rank")<3).show()
+```
