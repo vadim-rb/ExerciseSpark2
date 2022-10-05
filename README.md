@@ -217,3 +217,9 @@ My spark 2.1 version, but to_date function with two parameters has been added in
     val windowSpec  = Window.partitionBy("department").orderBy(col("time"))
     df.withColumn("sum", sum(col("items_sold")).over(windowSpec)).show
     ```
+
+35. https://jaceklaskowski.github.io/spark-workshop/exercises/sql/Calculating-Difference-Between-Consecutive-Rows-Per-Window.html  
+    ```
+    val windowSpec  = Window.partitionBy("department").orderBy(col("running_total").asc)
+    df.withColumn("lag",-lag("running_total",1,0).over(windowSpec)+col("running_total")).show()
+    ```
