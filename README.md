@@ -223,3 +223,8 @@ My spark 2.1 version, but to_date function with two parameters has been added in
     val windowSpec  = Window.partitionBy("department").orderBy(col("running_total").asc)
     df.withColumn("lag",-lag("running_total",1,0).over(windowSpec)+col("running_total")).show()
     ```
+
+36. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Converting-Arrays-of-Strings-to-String.html  
+    ```
+    words.withColumn("solution",concat_ws(" ",col("words"))).show
+    ```
