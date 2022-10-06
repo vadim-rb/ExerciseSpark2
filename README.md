@@ -228,3 +228,11 @@ My spark 2.1 version, but to_date function with two parameters has been added in
     ```
     words.withColumn("solution",concat_ws(" ",col("words"))).show
     ```
+
+37. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Calculating-percent-rank.html  
+    ```
+    val df  = spark.read.option("header", true).option("inferSchema", true).csv("/user/test/input37.csv") 
+    val windowSpec  = Window.orderBy("Salary")
+    import org.apache.spark.sql.types.IntegerType
+    df.withColumn("Percentage",round(percent_rank().over(windowSpec)*100).cast(IntegerType)).withColumn("Percentage",expr("case when Percentage > 60  then 'Higher' when Percentage > 50 then 'Average' else 'Lower' end")).show
+    ```
