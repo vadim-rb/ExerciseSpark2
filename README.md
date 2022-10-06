@@ -236,3 +236,17 @@ My spark 2.1 version, but to_date function with two parameters has been added in
     import org.apache.spark.sql.types.IntegerType
     df.withColumn("Percentage",round(percent_rank().over(windowSpec)*100).cast(IntegerType)).withColumn("Percentage",expr("case when Percentage > 60  then 'Higher' when Percentage > 50 then 'Average' else 'Lower' end")).show
     ```
+    
+38. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Working-with-Datasets-Using-JDBC-and-PostgreSQL.html  
+  
+  
+    [source code](/38/src)  
+    ```
+    /usr/hdp/2.6.1.0-129/spark2/bin/spark-submit --master yarn-cluster --class "Main" ex38-assembly-0.1.0-SNAPSHOT.jar \
+    --hostname=xxx \
+    --port=5432 \
+    --database=xxx \
+    --username=xxx \
+    --password=xxx \
+    --table=t1"
+    ```
