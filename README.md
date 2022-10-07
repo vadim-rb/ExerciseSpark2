@@ -258,3 +258,9 @@ My spark 2.1 version, but to_date function with two parameters has been added in
     data.groupBy("group").agg(first("id", true)).show
     ```
  
+ 41. --  
+ 
+ 42. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Finding-Most-Common-Non-null-Prefix-Occurences-per-Group.html  
+     ```
+     input.groupBy("UNIQUE_GUEST_ID").agg(first("PREFIX")).orderBy("UNIQUE_GUEST_ID").show
+     ```
