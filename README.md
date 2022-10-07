@@ -250,3 +250,11 @@ My spark 2.1 version, but to_date function with two parameters has been added in
     --password=xxx \
     --table=t1"
     ```
+
+39. --  
+
+40. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Finding-First-Non-Null-Value-per-Group.html  
+    ```
+    data.groupBy("group").agg(first("id", true)).show
+    ```
+ 
