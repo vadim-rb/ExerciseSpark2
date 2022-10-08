@@ -264,3 +264,10 @@ My spark 2.1 version, but to_date function with two parameters has been added in
      ```
      input.groupBy("UNIQUE_GUEST_ID").agg(first("PREFIX")).orderBy("UNIQUE_GUEST_ID").show
      ```
+ 
+ 43. -- Data Source V2 API was introduced in spark 2.3. My spark 2.1
+ 
+ 44. https://jaceklaskowski.github.io/spark-workshop/exercises/spark-sql-exercise-Using-rollup-Operator-for-Total-and-Average-Salaries-by-Department-and-Company-Wide.html  
+     ```
+     df.rollup("department").agg(sum("salary"),avg("salary")).show
+     ```
